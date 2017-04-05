@@ -11,13 +11,31 @@ module.exports.setup = function(sdk, cc){
 };
 
 module.exports.process_msg = function(ws, data){
-	if(data.v === 1){																						//only look at messages for part 1
-		if(data.type == 'create'){
-			
+																					
+		if(data.type == 'create_account'){
 			console.log('its a create!');
-			if(data.name && data.sex && data.keyword){
-				console.log(chaincode.invoke.create_user([data.name, data.keyword, data.sex], cb_invoked) );	//create a new marble
-			}
+			chaincode.invoke.create_account([data.ac_id, data.ac_short_name, data.status, data.term_date,
+	data.inception_date, data.ac_region, data.ac_sub_region, data.cod_country_domicile, data.liq_method,
+	data.contracting_entity, data.mgn_entity, data.ac_legal_name, data.manager_name, data.cod_ccy_base,
+	data.long_name, data.mandate_id, data.client_id, data.custodian_name, data.sub_mandate_id, 
+	data.transfer_agent_name, data.trust_bank, data.re_trust_bank, data.last_updated_by, 
+	data.last_approved_by, data.last_update_date], cb_invoked);	
+		}
+		else if(data.type == 'ac_trade_setup'){
+			console.log('its a create!');
+			chaincode.invoke.ac_trade_setup([ data.ac_id, data.lvts, data.calypso,
+	data.aladdin, data.trade_start_date, data.equity, data.fixed_income], cb_invoked);	
+		}
+		else if(data.type == 'ac_benchmark'){
+			console.log('its a create!');
+			chaincode.invoke.ac_benchmark([data.ac_id, data.benchmark_id, data.source, data.name,
+	data.currency, data.primary_flag, data.start_date, data.end_date, data.benchmark_reference_id,
+	data.benchmark_reference_id_source], cb_invoked);	
+		}
+		else if(data.type == 'benchmarks'){
+			console.log('its a create!');
+			chaincode.invoke.benchmarks([data.benchmark_id, data.id_source, data.name, data.currency,
+	data.benchmark_reference_id, data.benchmark_reference_id_source], cb_invoked);	
 		}
 		else if(data.type == 'get'){
 			console.log('get user msg');
@@ -33,7 +51,7 @@ module.exports.process_msg = function(ws, data){
 			console.log('chainstats msg');
 			ibc.chain_stats(cb_chainstats);
 		}
-	}
+	
 
 	//got the marble index, lets get each marble
 	function cb_got_index(e, index){
