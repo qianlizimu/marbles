@@ -1,4 +1,4 @@
-package main
+packge main
 
 import (
 	"errors"
@@ -12,16 +12,86 @@ import (
 type SimpleChaincode struct {
 }
 
-var marbleIndexStr = "_marbleindex"				//name for the key/value that will store a list of all known marbles
+var accountStr = "_acIndex"				//name for the key/value that will store a list of all known accounts
+var actradeStr = "_acTradeSet"				//name for the key/value that will store a list of all known account trades
+var acbenchStr = "_acBenchmark"				//name for the key/value that will store a list of all known account benchmarks
+var benchStr = "_benchStr"				//name for the key/value that will store a list of all known benchmarks
 
-
-type User struct{
-	Name string `json:"name"`					//the fieldtags are needed to keep case from bouncing around
-	Keyword string `json:"keyword"`
-	Sex int `json:"sex"`
+type Account struct{
+	Ac_id string `json:"ac_id"`				
+	Ac_short_name string `json:"ac_short_name"`
+	Status string `json:"status"`
+	Term_date string `json:"term_date"`
+	Inception_date string `json:"inception_date"`
+	Ac_region string `json:"ac_region"`
+	Ac_sub_region string `json:"ac_sub_region"`
+	Cod_country_domicile string `json:"cod_country_domicile"`
+	Liq_method string `json:"liq_method"`
+	Contracting_entity string `json:"contracting_entity"`
+	Mgn_entity string `json:"mgn_entity"`
+    Ac_legal_name string `json:"ac_legal_name"`
+	Manager_name string `json:"manager_name"`
+	Cod_ccy_base string `json:"cod_ccy_base"`
+	Long_name string `json:"long_name"`
+	Mandate_id string `json:"mandate_id"`
+	Client_id string `json:"client_id"`
+	Custodian_name string `json:"custodian_name"`
+    Sub_mandate_id string `json:"sub_mandate_id"`
+	Transfer_agent_name string `json:"transfer_agent_name"`
+	Trust_bank string `json:"trust_bank"`
+	Re_trust_bank string `json:"re_trust_bank"`
+    Last_updated_by string `json:"last_updated_by"`
+	Last_approved_by string `json:"last_approved_by"`
+	Last_update_date string `json:"last_update_date"`
 }
 
+type Ac_trades_setup struct{
+	Ac_id string `json:"ac_id"`					
+	Lvts string `json:"lvts"`
+	Calypso string `json:"calypso"`
+	Aladdin string `json:"aladdin"`
+	Trade_start_date string `json:"trade_start_date"`
+    Equity string `json:"equity"`
+	Fixed_income string `json:"fixed_income"`
+}
 
+type Ac_benchmark struct{
+	Ac_id string `json:"ac_id"`					
+	Benchmark_id string `json:"benchmark_id"`
+	Source string `json:"source"`
+	Name string `json:"name"`
+	Currency string `json:"currency"`
+    Primary_flag string `json:"primary_flag"`
+	Start_date string `json:"start_date"`
+	End_date string `json:"end_date"`
+    Benchmark_reference_id string `json:"benchmark_reference_id"`
+	Benchmark_reference_id_source string `json:"benchmark_reference_id_source"`
+}
+
+type Benchmarks struct{
+	Benchmark_id string `json:"benchmark_id"`					
+	Id_source string `json:"id_source"`
+	Name string `json:"name"`
+	Currency string `json:"currency"`
+    Benchmark_reference_id string `json:"benchmark_reference_id"`
+	Benchmark_reference_id_source string `json:"benchmark_reference_id_source"`
+}
+
+type Allaccount struct{
+	acarr []Account `json:"acarr"`
+}
+
+type Alltradeset struct{
+	tradeset []Ac_trades_setup `json:"tradeset"`
+}
+
+type Allacben struct{
+	acbench []Ac_benchmark `json:"acbench"`
+}
+
+type Allbench struct{
+	benchmark []Benchmarks `json:"benchmark"`
+}
 
 // ============================================================================================================================
 // Main
@@ -90,8 +160,14 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return res, err
 	} else if function == "write" {											//writes a value to the chaincode state
 		return t.Write(stub, args)
-	} else if function == "create_user" {									//create a new user
-		return t.create_user(stub, args)
+	} else if function == "create_account" {									//create a new user
+		return t.create_account(stub, args)
+	} else if function == "ac_trade_setup" {									//create a new user
+		return t.ac_trade_setup(stub, args)
+	} else if function == "ac_benchmark" {									//create a new user
+		return t.ac_benchmark(stub, args)
+	} else if function == "benchmarks" {									//create a new user
+		return t.benchmarks(stub, args)
 	} 
 	fmt.Println("invoke did not find func: " + function)					//error
 
@@ -197,66 +273,119 @@ func (t *SimpleChaincode) Write(stub shim.ChaincodeStubInterface, args []string)
 // ============================================================================================================================
 // create a new user
 // ============================================================================================================================
-func (t *SimpleChaincode) create_user(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
-
-	//   0       1       2     
-	// "Tom", "12345", "man"	
-     if len(args) != 3 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 3")
-	}
-
-	//input sanitation
 	fmt.Println("- start create user")
-	if len(args[0]) <= 0 {
-		return nil, errors.New("1st argument must be a non-empty string")
-	}
-	if len(args[1]) <= 0 {
-		return nil, errors.New("2nd argument must be a non-empty string")
-	}
-	if len(args[2]) <= 0 {
-		return nil, errors.New("3rd argument must be a non-empty string")
-	}
-
-	name := args[0]
-	keyword := args[1]
-	sex := args[2]
 	
-
-	//check if user already exists
-	marbleAsBytes, err := stub.GetState(name)
-	if err != nil {
-		return nil, errors.New("Failed to get user name")
-	}
-	res := User{}
-	json.Unmarshal(marbleAsBytes, &res)
-	if res.Name == name{
-		fmt.Println("This user arleady exists: " + name)
-		fmt.Println(res);
-		return nil, errors.New("This user arleady exists")		
-	}
+	newaccount := Account{}
+	newaccount.ac_id := args[0]				
+	newaccount.ac_short_name := args[1]
+	newaccount.status := args[2]
+	newaccount.term_date := args[3]
+	newaccount.inception_date := args[4]
+    newaccount.ac_region  := args[5]
+	newaccount.ac_sub_region := args[6]
+	newaccount.cod_country_domicile := args[7]
+	newaccount.liq_method  := args[8]
+	newaccount.contracting_entity := args[9]
+	newaccount.mgn_entity := args[10]
+    newaccount.ac_legal_name := args[11]
+	newaccount.manager_name := args[12]
+	newaccount.cod_ccy_base := args[13]
+	newaccount.long_name := args[14]
+	newaccount.mandate_id := args[15]
+	newaccount.client_id := args[16]
+	newaccount.custodian_name := args[17]
+    newaccount.sub_mandate_id := args[18]
+	newaccount.transfer_agent_name := args[19]
+	newaccount.trust_bank := args[20]
+	newaccount.re_trust_bank := args[21]
+    newaccount.last_updated_by := args[22]
+	newaccount.last_approved_by := args[23]
+	newaccount.last_update_date := args[24]
 	
-	//build the marble json string manually
-	str := `{"name": "` + name + `", "keyword": "` + keyword + `", "sex":" `+sex + `"}`
-	err = stub.PutState(name, []byte(str))									//store marble with id as key
-	if err != nil {
-		return nil, err
-	}
-		
-	//get the user index
-	marblesAsBytes, err := stub.GetState(marbleIndexStr)
-	if err != nil {
-		return nil, errors.New("Failed to get user index")
-	}
-	var marbleIndex []string
-	json.Unmarshal(marblesAsBytes, &marbleIndex)							//un stringify it aka JSON.parse()
+	acJson, err := stub.GetState(accountStr)
+	var acc_record Allaccount
+	json.Unmarshal(acJson, &acc_record)
+	acc_record.acarr=append(acc_record.acarr, newaccount)
+	jsonAsBytes, _ = json.Marshal(acc_record)
+	err = stub.PutState(accountStr, jsonAsBytes)	
 	
-	//append
-	marbleIndex = append(marbleIndex, name)									//add user name to index list
-	fmt.Println("! user index: ", marbleIndex)
-	jsonAsBytes, _ := json.Marshal(marbleIndex)
-	err = stub.PutState(marbleIndexStr, jsonAsBytes)						//store name of user
+	fmt.Println("- end create user")
+	return nil, nil
+}
 
+func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var err error
+	fmt.Println("- start create user")
+	
+	newaccount := Ac_trades_setup{}
+	newaccount.ac_id := args[0]				
+	newaccount.lvts := args[1]
+	newaccount.calypso := args[2]
+	newaccount.aladdin := args[3]
+	newaccount.trade_start_date := args[4]
+    newaccount.equity := args[5]
+	newaccount.fixed_income := args[6]
+	
+	acJson, err := stub.GetState(actradeStr)
+	var tradeset_record Alltradeset
+	json.Unmarshal(acJson, &tradeset_record)
+	tradeset_record.tradeset=append(tradeset_record.tradeset, newaccount)
+	jsonAsBytes, _ = json.Marshal(tradeset_record)
+	err = stub.PutState(actradeStr, jsonAsBytes)	
+	
+	fmt.Println("- end create user")
+	return nil, nil
+}
+
+func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var err error
+	fmt.Println("- start create user")
+	
+	newaccount := Ac_benchmark{}
+	newaccount.ac_id := args[0]				
+	newaccount.benchmark_id := args[1]
+	newaccount.source := args[2]
+	newaccount.name := args[3]
+	newaccount.currency := args[4]
+    newaccount.primary_flag  := args[5]
+	newaccount.start_date := args[6]
+	newaccount.end_date := args[7]
+	newaccount.benchmark_reference_id  := args[8]
+	newaccount.benchmark_reference_id_source := args[9]
+
+	
+	acJson, err := stub.GetState(acbenchStr)
+	var acben_record Allacben
+	json.Unmarshal(acJson, &acben_record)
+	acben_record.acbench=append(acben_record.acbench, newaccount)
+	jsonAsBytes, _ = json.Marshal(acben_record)
+	err = stub.PutState(acbenchStr, jsonAsBytes)	
+	
+	fmt.Println("- end create user")
+	return nil, nil
+}
+
+func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var err error
+	fmt.Println("- start create user")
+	
+	newaccount := Benchmarks{}
+	newaccount.benchmark_id := args[0]				
+	newaccount.id_source := args[1]
+	newaccount.name := args[2]
+	newaccount.currency := args[3]
+	newaccount.benchmark_reference_id := args[4]
+    newaccount.benchmark_reference_id_source  := args[5]
+	
+	acJson, err := stub.GetState(benchStr)
+	var bench_record Allbench
+	json.Unmarshal(acJson, &bench_record)
+	bench_record.benchmark=append(bench_record.benchmark, newaccount)
+	jsonAsBytes, _ = json.Marshal(bench_record)
+	err = stub.PutState(benchStr, jsonAsBytes)	
+	
 	fmt.Println("- end create user")
 	return nil, nil
 }
