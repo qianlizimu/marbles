@@ -6,28 +6,111 @@ var ws = {};
 // =================================================================================
 $(document).on('ready', function() {
 	connect_to_server();
-	$('input[name="name"]').val('r' + randStr(6));
+	$('input[name="ac_id"]').val('r' + randStr(6));
 	
 	// =================================================================================
 	// jQuery UI Events
 	// =================================================================================
 	$('#submit').click(function(){
-		console.log('creating user');
 		var obj = 	{
-						type: 'create',
-						name: $('input[name="name"]').val().replace(' ', ''),
-						keyword: $('input[name="keyword"]').val(),
-						sex: $('select[name="sex"]').val(),
-						v: 1
+						type: 'create_account',
+						ac_id: $('input[name="ac_id"]').val().replace(' ', ''),
+						ac_short_name: $('input[name="ac_short_name"]').val(),
+						status: $('input[name="status"]').val(),
+						term_date: $('select[name="term_date"]').val(),
+						inception_date: $('select[name="inception_date"]').val(),
+						ac_region: $('select[name="ac_region"]').val(),
+						ac_sub_region: $('select[name="ac_sub_region"]').val(),
+						cod_country_domicile: $('select[name="cod_country_domicile"]').val(),
+						liq_method: $('select[name="liq_method"]').val(),
+						contracting_entity: $('select[name="contract_entity"]').val(),
+						mgn_entity: $('select[name="mgn_entity"]').val(),
+						ac_legal_name: $('select[name="ac_legal_name"]').val(),
+						manager_name: $('select[name="manager_name"]').val(),
+						cod_ccy_base: $('select[name="cod_ccy_base"]').val(),
+						long_name: $('select[name="long_name"]').val(),
+						mandate_id: $('select[name="mandate_id"]').val(),
+						client_id: $('select[name="client_id"]').val(),
+						custodian_name: $('select[name="custodian_name"]').val(),
+						sub_mandate_id: $('select[name="sub_mandate_id"]').val(),
+						transfer_agent_name: $('select[name="transfer_agent_name"]').val(),
+						trust_bank: $('select[name="trust_bank"]').val(),
+						re_trust_bank: $('select[name="re_trust_bank"]').val(),
+						last_updated_by: $('select[name="last_updated_by"]').val(),
+						last_approved_by: $('select[name="last_approved_by"]').val(),
+						last_update_date: $('select[name="last_update_date"]').val()
 					};
-					alert("click");
-		if(obj.keyword && obj.name && obj.sex){
+					
+		if(obj.ac_id){
 			console.log('creating user, sending', obj);
 			ws.send(JSON.stringify(obj));
 			showHomePanel();
-			
-			$('#user1wrap').append("<p>"+obj.name+" sex:"+obj.sex+"</p>");					
-			
+			$('#user1wrap').append("<p>account:"+obj.ac_id+" [short name]:"+obj.ac_short_name+"</p>");					        		
+		}
+		return false;
+	});
+	
+		$('#submit2').click(function(){
+		var obj = 	{
+						type: 'ac_trade_setup',
+						ac_id: $('input[name="t_ac_id"]').val().replace(' ', ''),
+						lvts: $('input[name="lvts"]').val(),
+						calypso: $('input[name="calypso"]').val(),
+						aladdin: $('select[name="aladdin"]').val(),
+						trade_start_date: $('select[name="t_start_date"]').val(),
+						equity: $('select[name="equity"]').val(),
+						fixed_income: $('select[name="fixed_income"]').val()
+					};
+					
+		if(obj.ac_id){
+			console.log('creating user, sending', obj);
+			ws.send(JSON.stringify(obj));
+			showHomePanel();
+			$('#user1wrap').append("<p>account trades:"+obj.ac_id+" [lvts]:"+obj.lvts+"</p>");					 		
+		}
+		return false;
+	});
+	
+	$('#submit3').click(function(){
+		var obj = 	{
+						type: 'ac_benchmark',
+						ac_id: $('input[name="ben_ac_id"]').val().replace(' ', ''),
+						benchmark_id: $('input[name="aben_id"]').val(),
+						source: $('input[name="aben_source"]').val(),
+						name: $('select[name="aben_name"]').val(),
+						currency: $('select[name="aben_currency"]').val(),
+						primary_flag: $('select[name="aben_pri_flag"]').val(),
+						start_date: $('select[name="aben_startdate"]').val(),
+						end_date: $('select[name="aben_enddate"]').val(),
+						benchmark_reference_id: $('select[name="aben_ref_id"]').val(),
+						benchmark_reference_id_source: $('select[name="aben_ref_id_src"]').val()
+					};
+					
+		if(obj.ac_id){
+			console.log('creating user, sending', obj);
+			ws.send(JSON.stringify(obj));
+			showHomePanel();
+			$('#user1wrap').append("<p>account benchmarks:"+obj.ac_id+" [benchmark_id]:"+obj.benchmark_id+"</p>");		
+		}
+		return false;
+	});
+	
+	$('#submit4').click(function(){
+		var obj = 	{
+						type: 'benchmarks',
+						benchmark_id: $('input[name="benchmark_id"]').val().replace(' ', ''),
+						id_source: $('input[name="ben_id_src"]').val(),
+						name: $('input[name="ben_name"]').val(),
+						currency: $('select[name="ben_currency"]').val(),
+						benchmark_reference_id: $('select[name="ben_ref_id"]').val(),
+						benchmark_reference_id_source: $('select[name="ben_ref_id_src"]').val()
+					};
+					
+		if(obj.ac_id){
+			console.log('creating user, sending', obj);
+			ws.send(JSON.stringify(obj));
+			showHomePanel();
+			$('#user1wrap').append("<p>benchmarks:"+obj.benchmark_id+" [name]:"+obj.name+"</p>");		
 		}
 		return false;
 	});
@@ -37,7 +120,7 @@ $(document).on('ready', function() {
 	});
 
 	$('#createLink').click(function(){
-		$('input[name="name"]').val('r' + randStr(6));
+		$('input[name="ac_id"]').val('r' + randStr(6));
 	});
 
 	
@@ -48,8 +131,6 @@ $(document).on('ready', function() {
 	
 	$('#user1wrap').droppable({drop:
 		function( event, ui ) {
-			//	$(ui.draggable).addClass('invalid');
-			//	transfer($(ui.draggable).attr('id'), bag.setup.USER1);
 		}
 	});
 	
@@ -137,7 +218,6 @@ function connect_to_server(){
 			var msgObj = JSON.parse(msg.data);
 			if(msgObj.marble){
 				console.log('rec', msgObj.msg, msgObj);
-				build_ball(msgObj.marble);
 			}
 			else if(msgObj.msg === 'chainstats'){
 			
@@ -171,19 +251,3 @@ function connect_to_server(){
 }
 
 
-// =================================================================================
-//	UI Building
-// =================================================================================
-function build_ball(data){
-	var html = '';
-	
-	data.name = escapeHtml(data.name);
-	data.keyword = escapeHtml(data.keyword);
-	data.sex = escapeHtml(data.sex);
-	
-		
-		html+=("<p>"+data.name+"  sex:"+data.sex+"</p>");
-			$('#user1wrap').append(html);
-	
-	return html;
-}
