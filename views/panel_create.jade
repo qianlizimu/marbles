@@ -1,30 +1,175 @@
 #createPanel(hidden).panel
-	h1 Create New User
+	h1 Create New Account
 	hr
 	
 	#innerWrap
 		span.createball
 		
-		form(action="/create" method="POST")#createform
 			legend 
-				input(type="text" name="name" placeholder="Name the User")
-				span.hint &nbsp;&nbsp; Please input the name
-				
+				input(type="text" name="ac_id" placeholder="0001")
+				span.hint &nbsp;&nbsp; Input the account id	
 			br
-			legend 
-				input(type="text" name="keyword" placeholder="input the keyword")
-				span.hint &nbsp;&nbsp; Please input your keyword
-				
+				input(type="text" name="ac_short_name" placeholder="Tom")
+				span.hint &nbsp;&nbsp; Input your account short name	
 			br
-			legend 
-				select(name="sex")
-					option(value="man" disabled="disabled" selected="selected") sex
-					option(value="man") man
-					option(value="woman") woman
-		
+				input(type="text" name="status" placeholder="1")
+				span.hint &nbsp;&nbsp; Input the status
+			br
+				input(type="text" name="term_date" placeholder="2017-01-01")
+				span.hint &nbsp;&nbsp; Input your term date
+			br
+				input(type="text" name="inception_date" placeholder="2017-01-01")
+				span.hint &nbsp;&nbsp; Input your inception date	
+			br
+				input(type="text" name="ac_region" placeholder="US")
+				span.hint &nbsp;&nbsp; Input your region
+			br
+				input(type="text" name="ac_sub_region" placeholder="CA")
+				span.hint &nbsp;&nbsp; Input your sub-region	
+			br
+				input(type="text" name="cod_country_domicile" placeholder="05")
+				span.hint &nbsp;&nbsp; Input code for your domicile 	
+			br
+				input(type="text" name="liq_method" placeholder="03")
+				span.hint &nbsp;&nbsp; Input your liq method 
+			br
+				input(type="text" name="contract_entity" placeholder="1412")
+				span.hint &nbsp;&nbsp; Input your contracting entity
+			br
+				input(type="text" name="mgn_entity" placeholder="1234")
+				span.hint &nbsp;&nbsp; Input your management entity
+            br
+				input(type="text" name="ac_legal_name" placeholder="TomHuang")
+				span.hint &nbsp;&nbsp; Input your account legal name            	
+            br
+				input(type="text" name="manager_name" placeholder="TomHuang")
+				span.hint &nbsp;&nbsp; Input your manager name   
+            br
+				input(type="text" name="cod_ccy_base" placeholder="123")
+				span.hint &nbsp;&nbsp; Input your code ccy base
+			br
+				input(type="text" name="long_name" placeholder="Holmes.Tom.Huang.Sherlock")
+				span.hint &nbsp;&nbsp; Input your long name 
+			br
+				input(type="text" name="mandate_id" placeholder="54749110")
+				span.hint &nbsp;&nbsp; Input your mandate id
+			br
+				input(type="text" name="client_id" placeholder="12306")
+				span.hint &nbsp;&nbsp; Input your client id
+			br
+				input(type="text" name="custodian_name" placeholder="Arthur Conan Doyle")
+				span.hint &nbsp;&nbsp; Input your custodian name 
+			br
+				input(type="text" name="manager_name" placeholder="Smith")
+				span.hint &nbsp;&nbsp; Input your manager name
+			br
+				input(type="text" name="sub_mandate_id" placeholder="10086")
+				span.hint &nbsp;&nbsp; Input your sub mandate id 	
+			br
+				input(type="text" name="transfer_agent_name" placeholder="Davis")
+				span.hint &nbsp;&nbsp; Input your transfer agent name 
+			br
+				input(type="text" name="trust_bank" placeholder="China Bank")
+				span.hint &nbsp;&nbsp; Input your trust bank
+  			br
+				input(type="text" name="re_trust_bank" placeholder="China Bank")
+				span.hint &nbsp;&nbsp; Input your re-trust bank	
+			br
+				input(type="text" name="last_updated_by" placeholder="John Watson")
+				span.hint &nbsp;&nbsp; Input the person who updated it last 
+			br
+				input(type="text" name="last_approved_by" placeholder="Sherlock Holmes")
+				span.hint &nbsp;&nbsp; Input the person who approved it last  
+			br
+				input(type="text" name="last_update_date" placeholder="2017_03_08")
+				span.hint &nbsp;&nbsp; Input the last update date  
+			
 			button(type="button")#submit
 				span.fa.fa-check &nbsp;&nbsp;
-				span CREATE
-			
+				span create account 
+		
+		
+			legend 
+				input(type="text" name="t_ac_id" placeholder="0001")
+				span.hint &nbsp;&nbsp; Input the account id	
+			br
+				input(type="text" name="lvts" placeholder="1")
+				span.hint &nbsp;&nbsp; Input your lvts	
+			br
+				input(type="text" name="calypso" placeholder="1")
+				span.hint &nbsp;&nbsp; Input your calypso
+			br
+				input(type="text" name="aladdin" placeholder="1")
+				span.hint &nbsp;&nbsp; Input your aladdin	
+			br
+				input(type="text" name="t_start_date" placeholder="2016_10_10")
+				span.hint &nbsp;&nbsp; Input trade start date
+			br
+				input(type="text" name="equity" placeholder="1")
+				span.hint &nbsp;&nbsp; Input equity
+			br
+				input(type="text" name="fixed_income" placeholder="1")
+				span.hint &nbsp;&nbsp; Input fixed income	
+			button(type="button")#submit2
+				span.fa.fa-check &nbsp;&nbsp;
+				span create trade setup
+				
+		
+			legend 
+				input(type="text" name="ben_ac_id" placeholder="0001")
+				span.hint &nbsp;&nbsp; Input the account id	
+			br
+				input(type="text" name="aben_id" placeholder="0002")
+				span.hint &nbsp;&nbsp; Input the benchmark id	
+			br
+				input(type="text" name="aben_source" placeholder="Wuhan")
+				span.hint &nbsp;&nbsp; Input your source
+			br
+				input(type="text" name="aben_name" placeholder="Sherlock Holmes")
+				span.hint &nbsp;&nbsp; Input your name	
+			br
+				input(type="text" name="aben_currency" placeholder="RMB")
+				span.hint &nbsp;&nbsp; Input currency
+			br
+				input(type="text" name="aben_pri_flag" placeholder="1")
+				span.hint &nbsp;&nbsp; Input primary flag
+			br
+				input(type="text" name="aben_startdate" placeholder="2001_10_12")
+				span.hint &nbsp;&nbsp; Input start date 
+			br
+				input(type="text" name="aben_enddate" placeholder="2002_10_12")
+				span.hint &nbsp;&nbsp; Input end date 
+			br
+				input(type="text" name="aben_ref_id" placeholder="54749110")
+				span.hint &nbsp;&nbsp; Input benchmark reference id 
+			br
+				input(type="text" name="aben_ref_id_src" placeholder="sjtu1896")
+				span.hint &nbsp;&nbsp; Input benchmark reference id source	
+			button(type="button")#submit3
+				span.fa.fa-check &nbsp;&nbsp;
+				span create account benchmark
+		
+			legend 
+				input(type="text" name="benchmark_id" placeholder="1945")
+				span.hint &nbsp;&nbsp; Input the benchmark id	
+			br
+				input(type="text" name="ben_id_src" placeholder="Shanghai")
+				span.hint &nbsp;&nbsp; Input id source	
+			br
+				input(type="text" name="ben_name" placeholder="sjtu")
+				span.hint &nbsp;&nbsp; Input your name
+			br
+				input(type="text" name="ben_currency" placeholder="RMB")
+				span.hint &nbsp;&nbsp; Input currency	
+			br
+				input(type="text" name="ben_ref_id" placeholder="54749110")
+				span.hint &nbsp;&nbsp; Input benchmark reference id 
+			br
+				input(type="text" name="ben_ref_id_src" placeholder="sjtu1896")
+				span.hint &nbsp;&nbsp; Input benchmark reference id source	
+			button(type="button")#submit4
+				span.fa.fa-check &nbsp;&nbsp;
+				span create benchmarks
+		
 			
 			
