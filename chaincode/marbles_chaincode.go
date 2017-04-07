@@ -278,31 +278,31 @@ func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args 
 	fmt.Println("- start create user")
 	
 	newaccount := Account{}
-	newaccount.ac_id := args[0]				
-	newaccount.ac_short_name := args[1]
-	newaccount.status := args[2]
-	newaccount.term_date := args[3]
-	newaccount.inception_date := args[4]
-    newaccount.ac_region  := args[5]
-	newaccount.ac_sub_region := args[6]
-	newaccount.cod_country_domicile := args[7]
-	newaccount.liq_method  := args[8]
-	newaccount.contracting_entity := args[9]
-	newaccount.mgn_entity := args[10]
-    newaccount.ac_legal_name := args[11]
-	newaccount.manager_name := args[12]
-	newaccount.cod_ccy_base := args[13]
-	newaccount.long_name := args[14]
-	newaccount.mandate_id := args[15]
-	newaccount.client_id := args[16]
-	newaccount.custodian_name := args[17]
-    newaccount.sub_mandate_id := args[18]
-	newaccount.transfer_agent_name := args[19]
-	newaccount.trust_bank := args[20]
-	newaccount.re_trust_bank := args[21]
-    newaccount.last_updated_by := args[22]
-	newaccount.last_approved_by := args[23]
-	newaccount.last_update_date := args[24]
+	newaccount.Ac_id := args[0]				
+	newaccount.Ac_short_name := args[1]
+	newaccount.Status := args[2]
+	newaccount.Term_date := args[3]
+	newaccount.Inception_date := args[4]
+        newaccount.Ac_region  := args[5]
+	newaccount.Ac_sub_region := args[6]
+	newaccount.Cod_country_domicile := args[7]
+	newaccount.Liq_method  := args[8]
+	newaccount.Contracting_entity := args[9]
+	newaccount.Mgn_entity := args[10]
+    	newaccount.Ac_legal_name := args[11]
+	newaccount.Manager_name := args[12]
+	newaccount.Cod_ccy_base := args[13]
+	newaccount.Long_name := args[14]
+	newaccount.Mandate_id := args[15]
+	newaccount.Client_id := args[16]
+	newaccount.Custodian_name := args[17]
+    	newaccount.Sub_mandate_id := args[18]
+	newaccount.Transfer_agent_name := args[19]
+	newaccount.Trust_bank := args[20]
+	newaccount.Re_trust_bank := args[21]
+    	newaccount.Last_updated_by := args[22]
+	newaccount.Last_approved_by := args[23]
+	newaccount.Last_update_date := args[24]
 	
 	acJson, err := stub.GetState(accountStr)
 	var acc_record Allaccount
@@ -320,13 +320,13 @@ func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args 
 	fmt.Println("- start create user")
 	
 	newaccount := Ac_trades_setup{}
-	newaccount.ac_id := args[0]				
-	newaccount.lvts := args[1]
-	newaccount.calypso := args[2]
-	newaccount.aladdin := args[3]
-	newaccount.trade_start_date := args[4]
-    newaccount.equity := args[5]
-	newaccount.fixed_income := args[6]
+	newaccount.Ac_id := args[0]				
+	newaccount.Lvts := args[1]
+	newaccount.Calypso := args[2]
+	newaccount.Aladdin := args[3]
+	newaccount.Trade_start_date := args[4]
+    	newaccount.Equity := args[5]
+	newaccount.Fixed_income := args[6]
 	
 	acJson, err := stub.GetState(actradeStr)
 	var tradeset_record Alltradeset
@@ -344,16 +344,16 @@ func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []
 	fmt.Println("- start create user")
 	
 	newaccount := Ac_benchmark{}
-	newaccount.ac_id := args[0]				
-	newaccount.benchmark_id := args[1]
-	newaccount.source := args[2]
-	newaccount.name := args[3]
-	newaccount.currency := args[4]
-    newaccount.primary_flag  := args[5]
-	newaccount.start_date := args[6]
-	newaccount.end_date := args[7]
-	newaccount.benchmark_reference_id  := args[8]
-	newaccount.benchmark_reference_id_source := args[9]
+	newaccount.Ac_id := args[0]				
+	newaccount.Benchmark_id := args[1]
+	newaccount.Source := args[2]
+	newaccount.Name := args[3]
+	newaccount.Currency := args[4]
+    	newaccount.Primary_flag  := args[5]
+	newaccount.Start_date := args[6]
+	newaccount.End_date := args[7]
+	newaccount.Benchmark_reference_id  := args[8]
+	newaccount.Benchmark_reference_id_source := args[9]
 
 	
 	acJson, err := stub.GetState(acbenchStr)
@@ -372,12 +372,12 @@ func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []st
 	fmt.Println("- start create user")
 	
 	newaccount := Benchmarks{}
-	newaccount.benchmark_id := args[0]				
-	newaccount.id_source := args[1]
-	newaccount.name := args[2]
-	newaccount.currency := args[3]
-	newaccount.benchmark_reference_id := args[4]
-    newaccount.benchmark_reference_id_source  := args[5]
+	newaccount.Benchmark_id := args[0]				
+	newaccount.Id_source := args[1]
+	newaccount.Name := args[2]
+	newaccount.Currency := args[3]
+	newaccount.Benchmark_reference_id := args[4]
+    	newaccount.Benchmark_reference_id_source  := args[5]
 	
 	acJson, err := stub.GetState(benchStr)
 	var bench_record Allbench
