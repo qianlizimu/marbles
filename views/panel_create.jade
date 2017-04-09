@@ -4,7 +4,10 @@
 	
 	#innerWrap
 		span.createball
-		
+			button(type="file" onchange="handleFile(this.files)")#filein1
+				span.fa.fa-check &nbsp;&nbsp;
+				span create by a file 
+				
 			legend 
 				input(type="text" name="ac_id" placeholder="0001")
 				span.hint &nbsp;&nbsp; Input the account id	
@@ -87,7 +90,8 @@
 			button(type="button")#submit
 				span.fa.fa-check &nbsp;&nbsp;
 				span create account 
-		
+			
+			
 		
 			legend 
 				input(type="text" name="t_ac_id" placeholder="0001")
@@ -113,7 +117,9 @@
 			button(type="button")#submit2
 				span.fa.fa-check &nbsp;&nbsp;
 				span create trade setup
-				
+			button(type="file" onchange="handleFile2(this.files)")#filein2
+				span.fa.fa-check &nbsp;&nbsp;
+				span create trade by file 
 		
 			legend 
 				input(type="text" name="ben_ac_id" placeholder="0001")
@@ -148,6 +154,7 @@
 			button(type="button")#submit3
 				span.fa.fa-check &nbsp;&nbsp;
 				span create account benchmark
+			
 		
 			legend 
 				input(type="text" name="benchmark_id" placeholder="1945")
