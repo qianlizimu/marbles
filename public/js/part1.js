@@ -127,7 +127,7 @@ $(document).on('ready', function() {
             reader.onload = function() {
 				var i=0;
                // $('<pre>' + this.result + '</pre>').appendTo('body');
-			   var lists=this.result.split(/[,:]/);
+			   var lists=this.result.split(/[,:;]/);
 			   var pos=0;
 				while (true) {
 					if (pos>=lists.length) break;
