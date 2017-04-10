@@ -288,7 +288,7 @@ func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args 
 	var acc_record Allaccount
 	json.Unmarshal(acJson, &acc_record)
 	acc_record.acarr=append(acc_record.acarr, newaccount)
-	jsonAsBytes, _ = json.Marshal(acc_record)
+	jsonAsBytes, _ := json.Marshal(acc_record)
 	err = stub.PutState(accountStr, jsonAsBytes)	
 	
 	fmt.Println("- end create user")
@@ -312,7 +312,7 @@ func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args 
 	var tradeset_record Alltradeset
 	json.Unmarshal(acJson, &tradeset_record)
 	tradeset_record.tradeset=append(tradeset_record.tradeset, newaccount)
-	jsonAsBytes, _ = json.Marshal(tradeset_record)
+	jsonAsBytes, _ := json.Marshal(tradeset_record)
 	err = stub.PutState(actradeStr, jsonAsBytes)	
 	
 	fmt.Println("- end create user")
@@ -340,7 +340,7 @@ func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []
 	var acben_record Allacben
 	json.Unmarshal(acJson, &acben_record)
 	acben_record.acbench=append(acben_record.acbench, newaccount)
-	jsonAsBytes, _ = json.Marshal(acben_record)
+	jsonAsBytes, _ := json.Marshal(acben_record)
 	err = stub.PutState(acbenchStr, jsonAsBytes)	
 	
 	fmt.Println("- end create user")
@@ -363,7 +363,7 @@ func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []st
 	var bench_record Allbench
 	json.Unmarshal(acJson, &bench_record)
 	bench_record.benchmark=append(bench_record.benchmark, newaccount)
-	jsonAsBytes, _ = json.Marshal(bench_record)
+	jsonAsBytes, _ := json.Marshal(bench_record)
 	err = stub.PutState(benchStr, jsonAsBytes)	
 	
 	fmt.Println("- end create user")
