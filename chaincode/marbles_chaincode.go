@@ -254,7 +254,7 @@ func (t *SimpleChaincode) Write(stub shim.ChaincodeStubInterface, args []string)
 // create a new user
 // ============================================================================================================================
 func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var err error
+	
 	fmt.Println("- start create user")
 	
 	newaccount := Account{}
@@ -296,7 +296,7 @@ func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args 
 }
 
 func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var err error
+	
 	fmt.Println("- start create user")
 	
 	newaccount := Ac_trades_setup{}
@@ -320,7 +320,7 @@ func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args 
 }
 
 func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var err error
+	
 	fmt.Println("- start create user")
 	
 	newaccount := Ac_benchmark{}
@@ -348,7 +348,7 @@ func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []
 }
 
 func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var err error
+	
 	fmt.Println("- start create user")
 	
 	newaccount := Benchmarks{}
