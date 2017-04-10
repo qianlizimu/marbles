@@ -285,6 +285,9 @@ func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args 
 	newaccount.Last_update_date = args[24]
 	
 	acJson, err := stub.GetState(accountStr)
+	if err != nil {
+		return nil, err
+	}
 	var acc_record Allaccount
 	json.Unmarshal(acJson, &acc_record)
 	acc_record.acarr=append(acc_record.acarr, newaccount)
@@ -309,6 +312,9 @@ func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args 
 	newaccount.Fixed_income = args[6]
 	
 	acJson, err := stub.GetState(actradeStr)
+	if err != nil {
+		return nil, err
+	}
 	var tradeset_record Alltradeset
 	json.Unmarshal(acJson, &tradeset_record)
 	tradeset_record.tradeset=append(tradeset_record.tradeset, newaccount)
@@ -337,6 +343,9 @@ func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []
 
 	
 	acJson, err := stub.GetState(acbenchStr)
+	if err != nil {
+		return nil, err
+	}
 	var acben_record Allacben
 	json.Unmarshal(acJson, &acben_record)
 	acben_record.acbench=append(acben_record.acbench, newaccount)
@@ -360,6 +369,9 @@ func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []st
     newaccount.Benchmark_reference_id_source  = args[5]
 	
 	acJson, err := stub.GetState(benchStr)
+	if err != nil {
+		return nil, err
+	}
 	var bench_record Allbench
 	json.Unmarshal(acJson, &bench_record)
 	bench_record.benchmark=append(bench_record.benchmark, newaccount)
