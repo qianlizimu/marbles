@@ -317,15 +317,6 @@ label {
 #user1wrap, #user2wrap {
   min-height: 100px; }
 
-.createball {
-  font-size: 275px;
-  float: left;
-  color: transparent;
-  border: 2px dashed #fff;
-  border-radius: 200px;
-  width: 270px;
-  height: 270px; }
-
 #createform {
   float: left;
   margin-left: 40px;
@@ -338,7 +329,7 @@ label {
 #innerWrap {
   width: 800px;
   margin: auto;
-  text-align: right;
+  text-align: left;
   margin-top: 50px; }
 
 #blockdate {
