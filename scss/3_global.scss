@@ -118,15 +118,7 @@
 
 
 // --------- Create ---------
-.createball{
-	font-size:275px;
-	float:left;
-	color: transparent;
-	border: 2px dashed $main_color;
-	border-radius: 200px;
-	width: 270px;
-	height: 270px;
-}
+
 #createform{
 	float: left;
 	margin-left: 40px;
@@ -139,7 +131,7 @@
 #innerWrap{
 	width:800px;
 	margin:auto;
-	text-align: right;
+	text-align: left;
 	margin-top:50px;
 }
 
