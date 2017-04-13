@@ -77,21 +77,11 @@ type Benchmarks struct{
 	Benchmark_reference_id_source string `json:"benchmark_reference_id_source"`
 }
 
-type Allaccount struct{
-	acarr []Account `json:"acarr"`
-}
+var acarr []Account
+var tradeset []Ac_trades_setup
+var acbench []Ac_benchmark
+var benchmark []Benchmarks
 
-type Alltradeset struct{
-	tradeset []Ac_trades_setup `json:"tradeset"`
-}
-
-type Allacben struct{
-	acbench []Ac_benchmark `json:"acbench"`
-}
-
-type Allbench struct{
-	benchmark []Benchmarks `json:"benchmark"`
-}
 
 // ============================================================================================================================
 // Main
@@ -288,9 +278,9 @@ func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args 
 	if err != nil {
 		return nil, err
 	}
-	var acc_record Allaccount
+	var acc_record []Account
 	json.Unmarshal(acJson, &acc_record)
-	acc_record.acarr=append(acc_record.acarr, newaccount)
+	acc_record=append(acc_record, newaccount)
 	jsonAsBytes, _ := json.Marshal(acc_record)
 	err = stub.PutState(accountStr, jsonAsBytes)	
 	
@@ -315,9 +305,10 @@ func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args 
 	if err != nil {
 		return nil, err
 	}
-	var tradeset_record Alltradeset
+	var tradeset_record []Ac_trades_setup
+	
 	json.Unmarshal(acJson, &tradeset_record)
-	tradeset_record.tradeset=append(tradeset_record.tradeset, newaccount)
+	tradeset_record=append(tradeset_record, newaccount)
 	jsonAsBytes, _ := json.Marshal(tradeset_record)
 	err = stub.PutState(actradeStr, jsonAsBytes)	
 	
@@ -346,9 +337,11 @@ func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []
 	if err != nil {
 		return nil, err
 	}
-	var acben_record Allacben
+	
+	var acben_record []Ac_benchmark
+	
 	json.Unmarshal(acJson, &acben_record)
-	acben_record.acbench=append(acben_record.acbench, newaccount)
+	acben_record=append(acben_record, newaccount)
 	jsonAsBytes, _ := json.Marshal(acben_record)
 	err = stub.PutState(acbenchStr, jsonAsBytes)	
 	
@@ -372,9 +365,10 @@ func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []st
 	if err != nil {
 		return nil, err
 	}
-	var bench_record Allbench
+	
+	var bench_record []Benchmarks
 	json.Unmarshal(acJson, &bench_record)
-	bench_record.benchmark=append(bench_record.benchmark, newaccount)
+	bench_record=append(bench_record, newaccount)
 	jsonAsBytes, _ := json.Marshal(bench_record)
 	err = stub.PutState(benchStr, jsonAsBytes)	
 	
