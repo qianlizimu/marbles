@@ -1,0 +1,34 @@
+#panel_benchmark(hidden).panel
+			h1 Create Benchmarks
+			hr
+	
+			input(type="file" onchange="handleFile(this.files)")#filein4
+			span create by a file
+			
+			hr
+			
+			br
+			input(type="text" name="benchmark_id" placeholder="1945")
+			span.hint &nbsp;&nbsp; Input the benchmark id	
+			br
+			input(type="text" name="ben_id_src" placeholder="Shanghai")
+			span.hint &nbsp;&nbsp; Input id source	
+			br
+			input(type="text" name="ben_name" placeholder="sjtu")
+			span.hint &nbsp;&nbsp; Input your name
+			br
+			input(type="text" name="ben_currency" placeholder="RMB")
+			span.hint &nbsp;&nbsp; Input currency	
+			br
+			input(type="text" name="ben_ref_id" placeholder="54749110")
+			span.hint &nbsp;&nbsp; Input benchmark reference id 
+			br
+			input(type="text" name="ben_ref_id_src" placeholder="sjtu1896")
+			span.hint &nbsp;&nbsp; Input benchmark reference id source	
+			br
+			button(type="button")#submit4
+				span.fa.fa-check &nbsp;&nbsp;
+				span create benchmarks
+		
+			
+			
