@@ -39,7 +39,7 @@ module.exports.process_msg = function(ws, data){
 		}
 		else if(data.type == 'get'){
 			console.log('get user msg');
-			chaincode.query.read(['_marbleindex'], cb_got_index);
+			//chaincode.query.read(['_marbleindex'], cb_got_index);
 		}
 		else if(data.type == 'remove'){
 			console.log('removing msg');
