@@ -1,7 +1,13 @@
 #panel_benchmark(hidden).panel
-			h1 Create Benchmarks
-			hr
+	h1 Create Benchmarks
+	hr
 	
+	.subnav#nav_bench_maker Maker
+	.subnav#nav_bench_checker Checker
+	hr
+	
+	#benchmark_maker
+			#bench_mak_noti
 			input(type="file" onchange="handleFile(this.files)")#filein4
 			span create by a file
 			
@@ -30,5 +36,22 @@
 				span.fa.fa-check &nbsp;&nbsp;
 				span create benchmarks
 		
+			br
+			br
+			br
+			br
+			br
+				
+	#benchmark_checker(hidden)
+			#bench_check_noti
+			#bench_check_button(hidden)
+				button(type="button")#bench_accept
+					span.fa.fa-check &nbsp;&nbsp;
+					span Accept
+				br
+				br
+				button(type="button")#bench_decline
+					span.fa.fa-check &nbsp;&nbsp;
+					span Decline 
 			
 			
