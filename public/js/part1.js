@@ -1,5 +1,8 @@
 var ws = {};
-
+var tmp_account="";
+var tmp_actrade="";
+var tmp_acbench="";
+var tmp_bench="";
 
 // =================================================================================
 // On Load
@@ -14,36 +17,54 @@ $(document).on('ready', function() {
 						type: 'create_account',
 						ac_id: $('input[name="ac_id"]').val().replace(' ', ''),
 						ac_short_name: $('input[name="ac_short_name"]').val(),
-						status: $('input[name="status"]').val(),
-						term_date: $('select[name="term_date"]').val(),
-						inception_date: $('select[name="inception_date"]').val(),
-						ac_region: $('select[name="ac_region"]').val(),
-						ac_sub_region: $('select[name="ac_sub_region"]').val(),
-						cod_country_domicile: $('select[name="cod_country_domicile"]').val(),
-						liq_method: $('select[name="liq_method"]').val(),
-						contracting_entity: $('select[name="contract_entity"]').val(),
-						mgn_entity: $('select[name="mgn_entity"]').val(),
-						ac_legal_name: $('select[name="ac_legal_name"]').val(),
-						manager_name: $('select[name="manager_name"]').val(),
-						cod_ccy_base: $('select[name="cod_ccy_base"]').val(),
-						long_name: $('select[name="long_name"]').val(),
-						mandate_id: $('select[name="mandate_id"]').val(),
-						client_id: $('select[name="client_id"]').val(),
-						custodian_name: $('select[name="custodian_name"]').val(),
-						sub_mandate_id: $('select[name="sub_mandate_id"]').val(),
-						transfer_agent_name: $('select[name="transfer_agent_name"]').val(),
-						trust_bank: $('select[name="trust_bank"]').val(),
-						re_trust_bank: $('select[name="re_trust_bank"]').val(),
-						last_updated_by: $('select[name="last_updated_by"]').val(),
-						last_approved_by: $('select[name="last_approved_by"]').val(),
-						last_update_date: $('select[name="last_update_date"]').val()
+						ac_status: $('input[name="status"]').val(),
+						term_date: $('input[name="term_date"]').val(),
+						inception_date: $('input[name="inception_date"]').val(),
+						ac_region: $('input[name="ac_region"]').val(),
+						ac_sub_region: $('input[name="ac_sub_region"]').val(),
+						cod_country_domicile: $('input[name="cod_country_domicile"]').val(),
+						liq_method: $('input[name="liq_method"]').val(),
+						contracting_entity: $('input[name="contract_entity"]').val(),
+						mgn_entity: $('input[name="mgn_entity"]').val(),
+						ac_legal_name: $('input[name="ac_legal_name"]').val(),
+						manager_name: $('input[name="manager_name"]').val(),
+						cod_ccy_base: $('input[name="cod_ccy_base"]').val(),
+						long_name: $('input[name="long_name"]').val(),
+						mandate_id: $('input[name="mandate_id"]').val(),
+						client_id: $('input[name="client_id"]').val(),
+						custodian_name: $('input[name="custodian_name"]').val(),
+						sub_mandate_id: $('input[name="sub_mandate_id"]').val(),
+						transfer_agent_name: $('input[name="transfer_agent_name"]').val(),
+						trust_bank: $('input[name="trust_bank"]').val(),
+						re_trust_bank: $('input[name="re_trust_bank"]').val(),
+						last_updated_by: $('input[name="last_updated_by"]').val(),
+						last_approved_by: $('input[name="last_approved_by"]').val(),
+						last_update_date: $('input[name="last_update_date"]').val()
 					};
 					
 		if(obj.ac_id){
 			console.log('creating user, sending', obj);
 			ws.send(JSON.stringify(obj));
 			showHomePanel();
-			$('#user1wrap').append("<p>account:"+obj.ac_id+" [short name]:"+obj.ac_short_name+"</p>");					        		
+			$('#user1wrap').append("<p>Create [account]:"+obj.ac_id+" [short name]:"+obj.ac_short_name+"</p>");	
+			
+			tmp_account='<p><span style="color:#FF0;">A new account has been created:</span><br>'+
+			"[account]:"+obj.ac_id+"<br>[short name]:"+obj.ac_short_name+
+			"<br>[status]:"+obj.ac_status+"<br>[term date]:"+obj.term_date+
+			"<br>[inception date]:"+obj.inception_date+"<br>[region]:"+obj.ac_region+
+			"<br>[sub region]:"+obj.ac_sub_region+"<br>[country domicile]:"+obj.cod_country_domicile+
+			"<br>[liq method]:"+obj.liq_method+"<br>[contracting entity]:"+obj.contracting_entity+
+			"<br>[mgn entity]:"+obj.mgn_entity+"<br>[account legal name]:"+obj.ac_legal_name+
+			"<br>[manager name]:"+obj.manager_name+"<br>[cod_ccy_base]:"+obj.cod_ccy_base+
+			"<br>[long name]:"+obj.long_name+"<br>[mandate id]:"+obj.mandate_id+
+			"<br>[client id]:"+obj.client_id+"<br>[custodian name]:"+obj.custodian_name+
+			"<br>[sub_mandate_id]:"+obj.sub_mandate_id+"<br>[transfer_agent_name]:"+obj.transfer_agent_name+
+			"<br>[trust_bank]:"+obj.trust_bank+"<br>[re_trust_bank]:"+obj.re_trust_bank+
+			"<br>[last_updated_by]:"+obj.last_updated_by+"<br>[last_approved_by]:"+obj.last_approved_by+
+			"<br>[last_update_date]:"+obj.last_update_date+"</p><hr />";
+			
+		$('#ac_check_notice').append(tmp_account);
+			$('#ac_check_button').show();
 		}
 		return false;
 	});
@@ -54,17 +75,28 @@ $(document).on('ready', function() {
 						ac_id: $('input[name="t_ac_id"]').val().replace(' ', ''),
 						lvts: $('input[name="lvts"]').val(),
 						calypso: $('input[name="calypso"]').val(),
-						aladdin: $('select[name="aladdin"]').val(),
-						trade_start_date: $('select[name="t_start_date"]').val(),
-						equity: $('select[name="equity"]').val(),
-						fixed_income: $('select[name="fixed_income"]').val()
+						aladdin: $('input[name="aladdin"]').val(),
+						trade_start_date: $('input[name="t_start_date"]').val(),
+						equity: $('input[name="equity"]').val(),
+						fixed_income: $('input[name="fixed_income"]').val()
 					};
 					
 		if(obj.ac_id){
 			console.log('creating user, sending', obj);
 			ws.send(JSON.stringify(obj));
 			showHomePanel();
-			$('#user1wrap').append("<p>account trades:"+obj.ac_id+" [lvts]:"+obj.lvts+"</p>");					 		
+			$('#user1wrap').append("<p>account trades:"+obj.ac_id+" [lvts]:"+obj.lvts+"</p>");			
+
+			tmp_actrade='<p><span style="color:#FF0;">An account trade has been created:</span><br>'+
+			"[account id]:"+obj.ac_id+"<br>[lvts]:"+obj.lvts+
+			"<br>[calypso]:"+obj.calypso+"<br>[aladdin]:"+obj.aladdin+
+			"<br>[trade start date]:"+obj.trade_start_date+"<br>[equity]:"+obj.equity+
+			"<br>[fixed_income]:"+obj.fixed_income+"</p><hr />";
+			
+			$('#actrade_check_notice').append(tmp_actrade);
+			$('#actrade_check_button').show();
+			$('#actrade_mak_noti').empty();
+			
 		}
 		return false;
 	});
@@ -75,13 +107,13 @@ $(document).on('ready', function() {
 						ac_id: $('input[name="ben_ac_id"]').val().replace(' ', ''),
 						benchmark_id: $('input[name="aben_id"]').val(),
 						source: $('input[name="aben_source"]').val(),
-						name: $('select[name="aben_name"]').val(),
-						currency: $('select[name="aben_currency"]').val(),
-						primary_flag: $('select[name="aben_pri_flag"]').val(),
-						start_date: $('select[name="aben_startdate"]').val(),
-						end_date: $('select[name="aben_enddate"]').val(),
-						benchmark_reference_id: $('select[name="aben_ref_id"]').val(),
-						benchmark_reference_id_source: $('select[name="aben_ref_id_src"]').val()
+						name: $('input[name="aben_name"]').val(),
+						currency: $('input[name="aben_currency"]').val(),
+						primary_flag: $('input[name="aben_pri_flag"]').val(),
+						start_date: $('input[name="aben_startdate"]').val(),
+						end_date: $('input[name="aben_enddate"]').val(),
+						benchmark_reference_id: $('input[name="aben_ref_id"]').val(),
+						benchmark_reference_id_source: $('input[name="aben_ref_id_src"]').val()
 					};
 					
 		if(obj.ac_id){
@@ -89,6 +121,19 @@ $(document).on('ready', function() {
 			ws.send(JSON.stringify(obj));
 			showHomePanel();
 			$('#user1wrap').append("<p>account benchmarks:"+obj.ac_id+" [benchmark_id]:"+obj.benchmark_id+"</p>");		
+		
+		    tmp_acbench='<p><span style="color:#FF0;">An account benchmark has been created:</span><br>'+
+			"[account id]:"+obj.ac_id+"<br>[benchmark_id]:"+obj.benchmark_id+
+			"<br>[source]:"+obj.source+"<br>[name]:"+obj.name+
+			"<br>[currency]:"+obj.currency+"<br>[primary_flag]:"+obj.primary_flag+
+			"<br>[start_date]:"+obj.start_date+"<br>[end_date]:"+obj.end_date+
+			"<br>[benchmark_reference_id]:"+obj.benchmark_reference_id+"<br>[benchmark_reference_id_source]:"+obj.benchmark_reference_id_source
+			+"</p><hr />";
+			
+			$('#acbench_check_noti').append(tmp_acbench);
+			$('#acbench_check_button').show();
+			$('#acbench_mak_noti').empty();
+			
 		}
 		return false;
 	});
@@ -99,16 +144,26 @@ $(document).on('ready', function() {
 						benchmark_id: $('input[name="benchmark_id"]').val().replace(' ', ''),
 						id_source: $('input[name="ben_id_src"]').val(),
 						name: $('input[name="ben_name"]').val(),
-						currency: $('select[name="ben_currency"]').val(),
-						benchmark_reference_id: $('select[name="ben_ref_id"]').val(),
-						benchmark_reference_id_source: $('select[name="ben_ref_id_src"]').val()
+						currency: $('input[name="ben_currency"]').val(),
+						benchmark_reference_id: $('input[name="ben_ref_id"]').val(),
+						benchmark_reference_id_source: $('input[name="ben_ref_id_src"]').val()
 					};
 					
-		if(obj.ac_id){
+		if(obj.benchmark_id){
 			console.log('creating user, sending', obj);
 			ws.send(JSON.stringify(obj));
 			showHomePanel();
 			$('#user1wrap').append("<p>benchmarks:"+obj.benchmark_id+" [name]:"+obj.name+"</p>");		
+		
+			  tmp_bench='<p><span style="color:#FF0;">An account trade has been created:</span><br>'+
+			"[benchmark_id]:"+obj.benchmark_id+"<br>[id_source]:"+obj.id_source+
+			"<br>[name]:"+obj.name+"<br>[currency]:"+obj.currency+
+			"<br>[benchmark_reference_id]:"+obj.benchmark_reference_id+"<br>[benchmark_reference_id_source]:"+obj.benchmark_reference_id_source
+			+"</p><hr />";
+		
+		    $('#bench_check_noti').append(tmp_bench);
+			$('#bench_check_button').show();
+			$('#bench_mak_noti').empty();
 		}
 		return false;
 	});
@@ -254,6 +309,73 @@ $(document).on('ready', function() {
 	});
 	
 	
+   $('#ac_accept').click(function(){
+  	$('#actrade_mak_noti').append(tmp_account);
+	tmp_account="";
+	$('#ac_check_notice').empty();
+	$('#ac_check_button').hide();
+	$('#user1wrap').append("<p>Account Checker Accepted!</p>");	
+	showHomePanel();
+});
+	
+	$('#ac_decline').click(function(){
+	tmp_account="";
+	$('#ac_check_notice').empty();
+	$('#ac_check_button').hide();
+	$('#user1wrap').append("<p>Account Checker Declined!</p>");	
+	showHomePanel();
+});
+	
+	$('#actrade_accept').click(function(){
+  	$('#acbench_mak_noti').append(tmp_actrade);
+	tmp_actrade="";
+	$('#actrade_check_notice').empty();
+	$('#actrade_check_button').hide();
+	$('#user1wrap').append("<p>Account trade Checker Accepted!</p>");	
+	showHomePanel();
+});
+
+    $('#actrade_decline').click(function(){
+	tmp_actrade="";
+	$('#actrade_check_notice').empty();
+	$('#actrade_check_button').hide();
+	$('#user1wrap').append("<p>Account trade Checker Declined!</p>");	
+	showHomePanel();
+});
+
+     $('#acbench_accept').click(function(){
+  	$('#bench_mak_noti').append(tmp_acbench);
+	tmp_acbench="";
+	$('#acbench_check_noti').empty();
+	$('#acbench_check_button').hide();
+	$('#user1wrap').append("<p>Account Benchmark Checker Accepted!</p>");	
+	showHomePanel();
+});
+
+    $('#acbench_decline').click(function(){
+	tmp_acbench="";
+	$('#acbench_check_noti').empty();
+	$('#acbench_check_button').hide();
+	$('#user1wrap').append("<p>Account Benchmark Checker Declined!</p>");	
+	showHomePanel();
+});
+
+   $('#bench_accept').click(function(){
+	tmp_bench="";
+	$('#bench_check_noti').empty();
+	$('#bench_check_button').hide();
+	$('#user1wrap').append("<p>Benchmark Checker Accepted!</p>");	
+	showHomePanel();
+});
+
+    $('#bench_decline').click(function(){
+	tmp_bench="";
+	$('#bench_check_noti').empty();
+	$('#bench_check_button').hide();
+	$('#user1wrap').append("<p>Benchmark Checker Declined!</p>");	
+	showHomePanel();
+});
+	
 	//drag and drop marble
 	$('#user1wrap, #trashbin').sortable({connectWith: '.sortable'}).disableSelection();
 	
@@ -281,6 +403,7 @@ $(document).on('ready', function() {
 				showHomePanel();
 			}
 		}
+
 	});
 	
 	
@@ -308,6 +431,45 @@ $(document).on('ready', function() {
 	}
 	
 	
+	$('#nav_ac_maker').click(function(){
+	$('#account_maker').show();
+	$('#account_checker').hide();
+});
+
+   $('#nav_ac_checker').click(function(){
+	$('#account_maker').hide();
+	$('#account_checker').show();
+    });
+
+    $('#nav_actrade_maker').click(function(){
+	$('#actrade_maker').show();
+	$('#actrade_checker').hide();
+});
+
+   $('#nav_actrade_checker').click(function(){
+	$('#actrade_maker').hide();
+	$('#actrade_checker').show();
+    });
+	
+	$('#nav_acbench_maker').click(function(){
+	$('#acbench_maker').show();
+	$('#acbench_checker').hide();
+});
+
+   $('#nav_acbench_checker').click(function(){
+	$('#acbench_maker').hide();
+	$('#acbench_checker').show();
+    });
+
+    $('#nav_bench_maker').click(function(){
+	$('#benchmark_maker').show();
+	$('#benchmark_checker').hide();
+});
+
+   $('#nav_bench_checker').click(function(){
+	$('#benchmark_maker').hide();
+	$('#benchmark_checker').show();
+    });
 });
 
 
@@ -381,7 +543,6 @@ function connect_to_server(){
 		}
 	}
 }
-
 
 
 
