@@ -12,10 +12,18 @@ import (
 type SimpleChaincode struct {
 }
 
-var accountStr = "_acIndex"				//name for the key/value that will store a list of all known accounts
-var actradeStr = "_acTradeSet"				//name for the key/value that will store a list of all known account trades
-var acbenchStr = "_acBenchmark"				//name for the key/value that will store a list of all known account benchmarks
-var benchStr = "_benchStr"				//name for the key/value that will store a list of all known benchmarks
+var accountStr = "_acIndex"				//name for the key/value that will store a list of all newly created accounts
+var actradeStr = "_acTradeSet"				//name for the key/value that will store a list of all newly created account trades
+var acbenchStr = "_acBenchmark"				//name for the key/value that will store a list of all newly created account benchmarks
+var benchStr = "_benchStr"				//name for the key/value that will store a list of all newly created benchmarks
+
+
+var store_account = "_storeAc"				//name for the key/value that will store a list of all accepted accounts
+var store_actrade = "_storeAcTradeSet"				//name for the key/value that will store a list of all accepted account trades
+var store_acbench = "_storeAcBenchmark"				//name for the key/value that will store a list of all  accepted account benchmarks
+var store_bench = "_storeBenchStr"				//name for the key/value that will store a list of all accepted benchmarks
+
+var allStr="_allStr"    // name for all the key/value pair to store in the blockchain, after chekcer accepted 
 
 type Account struct{
 	Ac_id string `json:"ac_id"`				
@@ -77,11 +85,27 @@ type Benchmarks struct{
 	Benchmark_reference_id_source string `json:"benchmark_reference_id_source"`
 }
 
-var acarr []Account
-var tradeset []Ac_trades_setup
-var acbench []Ac_benchmark
-var benchmark []Benchmarks
+type Allaccount struct{
+	acarr []Account `json:"acarr"`
+}
 
+type Alltradeset struct{
+	tradeset []Ac_trades_setup `json:"tradeset"`
+}
+
+type Allacben struct{
+	acbench []Ac_benchmark `json:"acbench"`
+}
+
+type Allbench struct{
+	benchmark []Benchmarks `json:"benchmark"`
+}
+
+var allrecords [] string
+var hold_account [] string
+var hold_actrade [] string
+var hold_acbench [] string
+var hold_benchmark [] string
 
 // ============================================================================================================================
 // Main
@@ -134,6 +158,28 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	if err != nil {
 		return nil, err
 	}
+	
+	err = stub.PutState(store_account, jsonAsBytes)
+	if err != nil {
+		return nil, err
+	}
+	err = stub.PutState(store_actrade, jsonAsBytes)
+	if err != nil {
+		return nil, err
+	}
+	err = stub.PutState(store_acbench, jsonAsBytes)
+	if err != nil {
+		return nil, err
+	}
+	err = stub.PutState(store_bench, jsonAsBytes)
+	if err != nil {
+		return nil, err
+	}
+	err = stub.PutState(allStr, jsonAsBytes)
+	if err != nil {
+		return nil, err
+	}
+	
 	
 	return nil, nil
 }
@@ -278,9 +324,9 @@ func (t *SimpleChaincode) create_account(stub shim.ChaincodeStubInterface, args 
 	if err != nil {
 		return nil, err
 	}
-	var acc_record []Account
+	var acc_record Allaccount
 	json.Unmarshal(acJson, &acc_record)
-	acc_record=append(acc_record, newaccount)
+	acc_record.acarr=append(acc_record.acarr, newaccount)
 	jsonAsBytes, _ := json.Marshal(acc_record)
 	err = stub.PutState(accountStr, jsonAsBytes)	
 	
@@ -305,10 +351,9 @@ func (t *SimpleChaincode) ac_trade_setup(stub shim.ChaincodeStubInterface, args 
 	if err != nil {
 		return nil, err
 	}
-	var tradeset_record []Ac_trades_setup
-	
+	var tradeset_record Alltradeset
 	json.Unmarshal(acJson, &tradeset_record)
-	tradeset_record=append(tradeset_record, newaccount)
+	tradeset_record.tradeset=append(tradeset_record.tradeset, newaccount)
 	jsonAsBytes, _ := json.Marshal(tradeset_record)
 	err = stub.PutState(actradeStr, jsonAsBytes)	
 	
@@ -337,11 +382,9 @@ func (t *SimpleChaincode) ac_benchmark(stub shim.ChaincodeStubInterface, args []
 	if err != nil {
 		return nil, err
 	}
-	
-	var acben_record []Ac_benchmark
-	
+	var acben_record Allacben
 	json.Unmarshal(acJson, &acben_record)
-	acben_record=append(acben_record, newaccount)
+	acben_record.acbench=append(acben_record.acbench, newaccount)
 	jsonAsBytes, _ := json.Marshal(acben_record)
 	err = stub.PutState(acbenchStr, jsonAsBytes)	
 	
@@ -365,13 +408,123 @@ func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []st
 	if err != nil {
 		return nil, err
 	}
-	
-	var bench_record []Benchmarks
+	var bench_record Allbench
 	json.Unmarshal(acJson, &bench_record)
-	bench_record=append(bench_record, newaccount)
+	bench_record.benchmark=append(bench_record.benchmark, newaccount)
 	jsonAsBytes, _ := json.Marshal(bench_record)
 	err = stub.PutState(benchStr, jsonAsBytes)	
 	
 	fmt.Println("- end create user")
 	return nil, nil
 }
+
+
+func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	 var empty []string
+	 var tmpAllStr string
+	 
+	 jsonAsBytes, _ = json.Marshal(empty)	
+	 switch args[0] {
+	  case "Account":
+	     acJson, err := stub.GetState(accountStr)
+	     if err != nil {
+		    return nil, err
+	      }
+	     var acc_record Allaccount
+	     json.Unmarshal(acJson, &acc_record)
+		 if args[1]=="decline" {		
+		 err = stub.PutState(accountStr, jsonAsBytes)	
+		 } else {
+		   allAcJson, err := stub.GetState(store_account)
+		   json.Unmarshal(allAcJson, &hold_account)
+		   hold_account=append(hold_account, acc_record.acarr)
+		   jsonAsBytes, _ = json.Marshal(hold_account)
+		   err = stub.PutState(store_account, jsonAsBytes)
+		   
+		   tmpAllStr, err = stub.GetState(allStr)
+		   json.Unmarshal(tmpAllStr, &allrecords)
+		   allrecords=append(allrecords, acc_record.acarr)
+		    jsonAsBytes, _ = json.Marshal(allrecords)
+			err = stub.PutState(allStr, jsonAsBytes)
+		 }
+		 
+	 case "Ac_trades_setup":
+	     acJson2, err := stub.GetState(actradeStr)
+		 jsonAsBytes, _ = json.Marshal(empty)	
+	     if err != nil {
+		    return nil, err
+	      }
+	     var tradesets Alltradeset
+	     json.Unmarshal(acJson2, &tradesets)
+		 if args[1]=="decline" {		
+		 err = stub.PutState(actradeStr, jsonAsBytes)	
+		 } else {
+		   actradeJson, err := stub.GetState(store_actrade)
+		   json.Unmarshal(actradeJson, &hold_actrade)
+		   hold_actrade=append(hold_actrade, tradesets.tradeset)
+		   jsonAsBytes, _ := json.Marshal(hold_account)
+		   err = stub.PutState(store_actrade, jsonAsBytes)
+		   
+		    tmpAllStr, err = stub.GetState(allStr)
+		   json.Unmarshal(tmpAllStr, &allrecords)
+		   allrecords=append(allrecords, tradesets.tradeset)
+		    jsonAsBytes, _ = json.Marshal(allrecords)
+			err = stub.PutState(allStr, jsonAsBytes)
+		 }
+		
+	 case "Ac_benchmark":
+	     acJson3, err := stub.GetState(acbenchStr)
+		 jsonAsBytes, _ = json.Marshal(empty)	
+	     if err != nil {
+		    return nil, err
+	      }
+	     var acbens Allacben
+	     json.Unmarshal(acJson3, &acbens)
+		 if args[1]=="decline" {		
+		 err = stub.PutState(acbenchStr, jsonAsBytes)	
+		 } else {
+		   acbenJson, err := stub.GetState(store_acbench)
+		   json.Unmarshal(acbenJson, &hold_acbench)
+		   hold_acbench=append(hold_acbench, acbens.acbench)
+		   jsonAsBytes, _ := json.Marshal(hold_acbench)
+		   err = stub.PutState(store_acbench, jsonAsBytes)
+		 
+		    tmpAllStr, err = stub.GetState(allStr)
+		   json.Unmarshal(tmpAllStr, &allrecords)
+		   allrecords=append(allrecords, acbens.acbench)
+		    jsonAsBytes, _ = json.Marshal(allrecords)
+			err = stub.PutState(allStr, jsonAsBytes)
+		 }
+		 
+	case "Benchmarks":
+	     acJson4, err := stub.GetState(benchStr)
+		 jsonAsBytes, _ = json.Marshal(empty)	
+	     if err != nil {
+		    return nil, err
+	      }
+	     var benchs Allbench
+	     json.Unmarshal(acJson4, &benchs)
+		 if args[1]=="decline" {		
+		 err = stub.PutState(benchStr, jsonAsBytes)	
+		 } else {
+		   benJson, err := stub.GetState(store_bench)
+		   json.Unmarshal(benJson, &hold_benchmark)
+		   hold_benchmark=append(hold_benchmark, benchs.benchmark)
+		   jsonAsBytes, _ := json.Marshal(hold_benchmark)
+		   err = stub.PutState(store_bench, jsonAsBytes)
+		 
+		    tmpAllStr, err = stub.GetState(allStr)
+		   json.Unmarshal(tmpAllStr, &allrecords)
+		   allrecords=append(allrecords, benchs.benchmark)
+		    jsonAsBytes, _ = json.Marshal(allrecords)
+			err = stub.PutState(allStr, jsonAsBytes)
+		 }
+	
+	fmt.Println("- end checker")
+	return nil, nil
+	}
+	
+	
+}
+
+
