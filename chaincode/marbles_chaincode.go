@@ -423,7 +423,7 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 	 var empty []string
 	 var tmpAllStr string
 	 
-	 jsonAsBytes, _ = json.Marshal(empty)	
+	jsonAsBytes, _ := json.Marshal(empty)	
 	 switch args[0] {
 	  case "Account":
 	     acJson, err := stub.GetState(accountStr)
