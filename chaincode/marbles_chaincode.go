@@ -521,10 +521,9 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 			err = stub.PutState(allStr, jsonAsBytes)
 		 }
 	
+	}
 	fmt.Println("- end checker")
 	return nil, nil
-	}
-	
 	
 }
 
