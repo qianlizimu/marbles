@@ -423,7 +423,10 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 	 var empty []string
 	 var tmpAllStr []byte
 	 
-	 jsonAsBytes, _ := json.Marshal(empty)	
+	 jsonAsBytes, err:= json.Marshal(empty)
+        if err != nil {
+		    return nil, err
+	      }	 
 	 switch args[0] {
 	  case "Account":
 	     acJson, err := stub.GetState(accountStr)
@@ -435,13 +438,13 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 		 if args[1]=="decline" {		
 		 err = stub.PutState(accountStr, jsonAsBytes)	
 		 } else {
-		   allAcJson, err := stub.GetState(store_account)
+		   allAcJson, _ := stub.GetState(store_account)
 		   json.Unmarshal(allAcJson, &hold_account)
 		   hold_account=append(hold_account, string(acJson))
 		   jsonAsBytes, _ = json.Marshal(hold_account)
 		   err = stub.PutState(store_account, jsonAsBytes)
 		   
-		   tmpAllStr, err = stub.GetState(allStr)
+		   tmpAllStr, _ = stub.GetState(allStr)
 		   json.Unmarshal(tmpAllStr, &allrecords)
 		   
 		   allrecords=append(allrecords, string(acJson))
@@ -450,17 +453,18 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 		 }
 		 
 	 case "Ac_trades_setup":
-	     acJson2, err := stub.GetState(actradeStr)
-		 jsonAsBytes, _ = json.Marshal(empty)	
-	     if err != nil {
+	     acJson2, err:= stub.GetState(actradeStr)
+		   if err != nil {
 		    return nil, err
 	      }
+		 jsonAsBytes, err = json.Marshal(empty)	
+	    
 	    // var tradesets Alltradeset
 	    // json.Unmarshal(acJson2, &tradesets)
 		 if args[1]=="decline" {		
 		 err = stub.PutState(actradeStr, jsonAsBytes)	
 		 } else {
-		   actradeJson, err := stub.GetState(store_actrade)
+		   actradeJson, _ := stub.GetState(store_actrade)
 		   json.Unmarshal(actradeJson, &hold_actrade)
 		   hold_actrade=append(hold_actrade, string(acJson2))
 		   jsonAsBytes, _ := json.Marshal(hold_account)
@@ -469,22 +473,23 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 		    tmpAllStr, err = stub.GetState(allStr)
 		   json.Unmarshal(tmpAllStr, &allrecords)
 		   allrecords=append(allrecords, string(acJson2))
-		    jsonAsBytes, _ = json.Marshal(allrecords)
+		    jsonAsBytes, err = json.Marshal(allrecords)
 			err = stub.PutState(allStr, jsonAsBytes)
 		 }
 		
 	 case "Ac_benchmark":
-	     acJson3, err := stub.GetState(acbenchStr)
-		 jsonAsBytes, _ = json.Marshal(empty)	
-	     if err != nil {
+	     acJson3, err:= stub.GetState(acbenchStr)
+		   if err != nil {
 		    return nil, err
 	      }
+		 jsonAsBytes, err = json.Marshal(empty)	
+	   
 	    // var acbens Allacben
 	    // json.Unmarshal(acJson3, &acbens)
 		 if args[1]=="decline" {		
 		 err = stub.PutState(acbenchStr, jsonAsBytes)	
 		 } else {
-		   acbenJson, err := stub.GetState(store_acbench)
+		   acbenJson, _ := stub.GetState(store_acbench)
 		   json.Unmarshal(acbenJson, &hold_acbench)
 		   hold_acbench=append(hold_acbench, string(acJson3))
 		   jsonAsBytes, _ := json.Marshal(hold_acbench)
@@ -493,7 +498,7 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 		    tmpAllStr, err = stub.GetState(allStr)
 		   json.Unmarshal(tmpAllStr, &allrecords)
 		   allrecords=append(allrecords, string(acJson3))
-		    jsonAsBytes, _ = json.Marshal(allrecords)
+		    jsonAsBytes, err = json.Marshal(allrecords)
 			err = stub.PutState(allStr, jsonAsBytes)
 		 }
 		 
@@ -508,7 +513,7 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 		 if args[1]=="decline" {		
 		 err = stub.PutState(benchStr, jsonAsBytes)	
 		 } else {
-		   benJson, err := stub.GetState(store_bench)
+		   benJson, _ := stub.GetState(store_bench)
 		   json.Unmarshal(benJson, &hold_benchmark)
 		   hold_benchmark=append(hold_benchmark, string(acJson4))
 		   jsonAsBytes, _ := json.Marshal(hold_benchmark)
