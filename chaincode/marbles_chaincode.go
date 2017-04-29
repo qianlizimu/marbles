@@ -430,8 +430,7 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 	     if err != nil {
 		    return nil, err
 	      }
-	    // var acc_record Allaccount
-	    // json.Unmarshal(acJson, &acc_record)
+	   
 		 if args[1]=="decline" {		
 		 err = stub.PutState(accountStr, jsonAsBytes)	
 		 } else {
@@ -456,8 +455,7 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 	      }
 		 jsonAsBytes, err = json.Marshal(empty)	
 	    
-	    // var tradesets Alltradeset
-	    // json.Unmarshal(acJson2, &tradesets)
+	
 		 if args[1]=="decline" {		
 		 err = stub.PutState(actradeStr, jsonAsBytes)	
 		 } else {
@@ -481,8 +479,7 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 	      }
 		 jsonAsBytes, err = json.Marshal(empty)	
 	   
-	    // var acbens Allacben
-	    // json.Unmarshal(acJson3, &acbens)
+	   
 		 if args[1]=="decline" {		
 		 err = stub.PutState(acbenchStr, jsonAsBytes)	
 		 } else {
@@ -505,8 +502,7 @@ func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []
 	     if err != nil {
 		    return nil, err
 	      }
-	     var benchs Allbench
-	     json.Unmarshal(acJson4, &benchs)
+	
 		 if args[1]=="decline" {		
 		 err = stub.PutState(benchStr, jsonAsBytes)	
 		 } else {
