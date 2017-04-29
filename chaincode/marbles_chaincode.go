@@ -421,7 +421,7 @@ func (t *SimpleChaincode) benchmarks(stub shim.ChaincodeStubInterface, args []st
 
 func (t *SimpleChaincode) check_decide(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	 var empty []string
-	 var tmpAllStr string
+	 var tmpAllStr []byte
 	 
 	 jsonAsBytes, _ := json.Marshal(empty)	
 	 switch args[0] {
