@@ -39,7 +39,7 @@ module.exports.process_msg = function(ws, data){
 		}
 		else if(data.type == 'get'){
 			console.log('get user msg');
-			//chaincode.query.read(['_marbleindex'], cb_got_index);
+			chaincode.query.read(['_allStr'], cb_got_index);
 		}
 		else if(data.type == 'remove'){
 			console.log('removing msg');
@@ -50,6 +50,9 @@ module.exports.process_msg = function(ws, data){
 		else if(data.type == 'chainstats'){
 			console.log('chainstats msg');
 			ibc.chain_stats(cb_chainstats);
+		} else if(data.type == 'check_decide'){
+		
+			chaincode.invoke.check_decide([data.checktype, data.checkcont]);
 		}
 	
 
