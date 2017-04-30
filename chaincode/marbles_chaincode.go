@@ -206,6 +206,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.ac_benchmark(stub, args)
 	} else if function == "benchmarks" {									//create a new user
 		return t.benchmarks(stub, args)
+	} else if function == "check_decide" {									//create a new user
+		return t.check_decide(stub, args)
 	} 
 	fmt.Println("invoke did not find func: " + function)					//error
 
