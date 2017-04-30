@@ -288,8 +288,13 @@
 }
 
 
+.focused{
+  color:red;
+}
+.unfocused{
+  color:$acc_color3;
+}
 .subnav {
-	color:$acc_color3;
 	padding: 0px 30px;
 	display:inline-block;
 }
