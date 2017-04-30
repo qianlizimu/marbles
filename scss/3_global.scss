@@ -286,3 +286,14 @@
 .colorValue{
 	margin-left:10px;
 }
+
+
+.subnav {
+	color:$acc_color3;
+	padding: 0px 30px;
+	display:inline-block;
+}
+.subnav:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
