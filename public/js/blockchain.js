@@ -97,7 +97,7 @@ function formatType(i){											//spell out deploy or invoke
 }
 
 function formatPayload(str, ccid){								//create a sllliiiggghhhtttlllllyyy better payload name from decoded payload
-	var func = ['init', 'delete', 'write', 'create_user'];
+	var func = ['init', 'delete', 'write', 'create_account','ac_trade_setup', 'ac_benchmark', 'benchmarks', 'check_decide'];
 	str =  str.substring(str.indexOf(ccid) + ccid.length + 4);
 	for(var i in func){
 		if(str.indexOf(func[i]) >= 0){
