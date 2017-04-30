@@ -440,41 +440,73 @@ $(document).on('ready', function() {
 	
 	
 	$('#nav_ac_maker').click(function(){
+	$("#nav_ac_maker").removeclass();
+	$("#nav_ac_maker").addclass("subnav focused");
+	$("#nav_ac_checker").removeclass();
+	$("#nav_ac_checker").addclass("subnav unfocused");
 	$('#account_maker').show();
 	$('#account_checker').hide();
 });
 
    $('#nav_ac_checker').click(function(){
+	   $("#nav_ac_maker").removeclass();
+	$("#nav_ac_maker").addclass("subnav unfocused");
+	$("#nav_ac_checker").removeclass();
+	$("#nav_ac_checker").addclass("subnav focused");
 	$('#account_maker').hide();
 	$('#account_checker').show();
     });
 
     $('#nav_actrade_maker').click(function(){
+		$("#nav_actrade_maker").removeclass();
+	$("#nav_actrade_maker").addclass("subnav focused");
+	$("#nav_actrade_checker").removeclass();
+	$("#nav_actrade_checker").addclass("subnav unfocused");
 	$('#actrade_maker').show();
 	$('#actrade_checker').hide();
 });
 
    $('#nav_actrade_checker').click(function(){
+	   $("#nav_actrade_maker").removeclass();
+	$("#nav_actrade_maker").addclass("subnav unfocused");
+	$("#nav_actrade_checker").removeclass();
+	$("#nav_actrade_checker").addclass("subnav focused");
 	$('#actrade_maker').hide();
 	$('#actrade_checker').show();
     });
 	
 	$('#nav_acbench_maker').click(function(){
+	 $("#nav_acbench_maker").removeclass();
+	$("#nav_acbench_maker").addclass("subnav focused");
+	$("#nav_acbench_checker").removeclass();
+	$("#nav_acbench_checker").addclass("subnav unfocused");
 	$('#acbench_maker').show();
 	$('#acbench_checker').hide();
 });
 
    $('#nav_acbench_checker').click(function(){
+	    $("#nav_acbench_maker").removeclass();
+	$("#nav_acbench_maker").addclass("subnav unfocused");
+	$("#nav_acbench_checker").removeclass();
+	$("#nav_acbench_checker").addclass("subnav focused");
 	$('#acbench_maker').hide();
 	$('#acbench_checker').show();
     });
 
     $('#nav_bench_maker').click(function(){
+		  $("#nav_bench_maker").removeclass();
+	$("#nav_bench_maker").addclass("subnav focused");
+	$("#nav_bench_checker").removeclass();
+	$("#nav_bench_checker").addclass("subnav unfocused");
 	$('#benchmark_maker').show();
 	$('#benchmark_checker').hide();
 });
 
    $('#nav_bench_checker').click(function(){
+	   	  $("#nav_bench_maker").removeclass();
+	$("#nav_bench_maker").addclass("subnav unfocused");
+	$("#nav_bench_checker").removeclass();
+	$("#nav_bench_checker").addclass("subnav focused");
 	$('#benchmark_maker').hide();
 	$('#benchmark_checker').show();
     });
