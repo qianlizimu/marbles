@@ -315,6 +315,7 @@ $(document).on('ready', function() {
 	$('#ac_check_notice').empty();
 	$('#ac_check_button').hide();
 	$('#user1wrap').append("<p>Account Checker Accepted!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Account", checkcont:"accept"}));
 	showHomePanel();
 });
 	
@@ -323,6 +324,7 @@ $(document).on('ready', function() {
 	$('#ac_check_notice').empty();
 	$('#ac_check_button').hide();
 	$('#user1wrap').append("<p>Account Checker Declined!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Account", checkcont:"decline"}));
 	showHomePanel();
 });
 	
@@ -332,6 +334,7 @@ $(document).on('ready', function() {
 	$('#actrade_check_notice').empty();
 	$('#actrade_check_button').hide();
 	$('#user1wrap').append("<p>Account trade Checker Accepted!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Ac_trades_setup", checkcont:"accept"}));
 	showHomePanel();
 });
 
@@ -340,6 +343,7 @@ $(document).on('ready', function() {
 	$('#actrade_check_notice').empty();
 	$('#actrade_check_button').hide();
 	$('#user1wrap').append("<p>Account trade Checker Declined!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Ac_trades_setup", checkcont:"decline"}));
 	showHomePanel();
 });
 
@@ -349,6 +353,7 @@ $(document).on('ready', function() {
 	$('#acbench_check_noti').empty();
 	$('#acbench_check_button').hide();
 	$('#user1wrap').append("<p>Account Benchmark Checker Accepted!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Ac_benchmark", checkcont:"accept"}));
 	showHomePanel();
 });
 
@@ -357,6 +362,7 @@ $(document).on('ready', function() {
 	$('#acbench_check_noti').empty();
 	$('#acbench_check_button').hide();
 	$('#user1wrap').append("<p>Account Benchmark Checker Declined!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Ac_benchmark", checkcont:"decline"}));
 	showHomePanel();
 });
 
@@ -365,6 +371,7 @@ $(document).on('ready', function() {
 	$('#bench_check_noti').empty();
 	$('#bench_check_button').hide();
 	$('#user1wrap').append("<p>Benchmark Checker Accepted!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Benchmarks", checkcont:"accept"}));
 	showHomePanel();
 });
 
@@ -373,6 +380,7 @@ $(document).on('ready', function() {
 	$('#bench_check_noti').empty();
 	$('#bench_check_button').hide();
 	$('#user1wrap').append("<p>Benchmark Checker Declined!</p>");	
+	ws.send(JSON.stringify({type:"check_decide", checktype:"Benchmarks", checkcont:"decline"}));
 	showHomePanel();
 });
 	
