@@ -430,83 +430,69 @@ $(document).on('ready', function() {
 		window.history.pushState({},'', part + '/home');						//put it in url so we can f5
 		
 		console.log('getting new users');
+	
 		setTimeout(function(){
 			//$('#user1wrap').html('');											//reset the panel
 			ws.send(JSON.stringify({type: 'get', v: 1}));						//need to wait a bit
 			ws.send(JSON.stringify({type: 'chainstats', v: 1}));
 			
 		}, 1000);
+		
 	}
 	
 	
 	$('#nav_ac_maker').click(function(){
-	$("#nav_ac_maker").removeclass();
-	$("#nav_ac_maker").addclass("subnav focused");
-	$("#nav_ac_checker").removeclass();
-	$("#nav_ac_checker").addclass("subnav unfocused");
+	$("#nav_ac_maker").css("color","red");
+	$("#nav_ac_checker").css("color","white");
 	$('#account_maker').show();
 	$('#account_checker').hide();
 });
 
    $('#nav_ac_checker').click(function(){
-	   $("#nav_ac_maker").removeclass();
-	$("#nav_ac_maker").addclass("subnav unfocused");
-	$("#nav_ac_checker").removeclass();
-	$("#nav_ac_checker").addclass("subnav focused");
+		$("#nav_ac_maker").css("color","white");
+	$("#nav_ac_checker").css("color","red");
 	$('#account_maker').hide();
 	$('#account_checker').show();
     });
 
     $('#nav_actrade_maker').click(function(){
-		$("#nav_actrade_maker").removeclass();
-	$("#nav_actrade_maker").addclass("subnav focused");
-	$("#nav_actrade_checker").removeclass();
-	$("#nav_actrade_checker").addclass("subnav unfocused");
+		$("#nav_actrade_maker").css("color","red");
+	$("#nav_actrade_checker").css("color","white");
 	$('#actrade_maker').show();
 	$('#actrade_checker').hide();
 });
 
    $('#nav_actrade_checker').click(function(){
-	   $("#nav_actrade_maker").removeclass();
-	$("#nav_actrade_maker").addclass("subnav unfocused");
-	$("#nav_actrade_checker").removeclass();
-	$("#nav_actrade_checker").addclass("subnav focused");
+		$("#nav_actrade_maker").css("color","white");
+	$("#nav_actrade_checker").css("color","red");
 	$('#actrade_maker').hide();
 	$('#actrade_checker').show();
     });
 	
 	$('#nav_acbench_maker').click(function(){
-	 $("#nav_acbench_maker").removeclass();
-	$("#nav_acbench_maker").addclass("subnav focused");
-	$("#nav_acbench_checker").removeclass();
-	$("#nav_acbench_checker").addclass("subnav unfocused");
+	 $("#nav_acbench_maker").css("color","red");
+	$("#nav_acbench_checker").css("color","white");
 	$('#acbench_maker').show();
 	$('#acbench_checker').hide();
 });
 
    $('#nav_acbench_checker').click(function(){
-	    $("#nav_acbench_maker").removeclass();
-	$("#nav_acbench_maker").addclass("subnav unfocused");
-	$("#nav_acbench_checker").removeclass();
-	$("#nav_acbench_checker").addclass("subnav focused");
+		 $("#nav_acbench_maker").css("color","white");
+	$("#nav_acbench_checker").css("color","red");
 	$('#acbench_maker').hide();
 	$('#acbench_checker').show();
     });
 
     $('#nav_bench_maker').click(function(){
-		  $("#nav_bench_maker").removeclass();
-	$("#nav_bench_maker").addclass("subnav focused");
-	$("#nav_bench_checker").removeclass();
-	$("#nav_bench_checker").addclass("subnav unfocused");
+		  $("#nav_bench_maker").css("color","red");
+	$("#nav_bench_checker").css("color","white");
 	$('#benchmark_maker').show();
 	$('#benchmark_checker').hide();
 });
 
    $('#nav_bench_checker').click(function(){
-	   	  $("#nav_bench_maker").removeclass();
-	$("#nav_bench_maker").addclass("subnav unfocused");
-	$("#nav_bench_checker").removeclass();
-	$("#nav_bench_checker").addclass("subnav focused");
+	 	  $("#nav_bench_maker").css("color","white");
+	$("#nav_bench_checker").css("color","red");
 	$('#benchmark_maker').hide();
 	$('#benchmark_checker').show();
     });
