@@ -64,6 +64,7 @@ $(document).on('ready', function() {
 			"<br>[last_update_date]:"+obj.last_update_date+"</p><hr />";
 			
 		$('#ac_check_notice').append(tmp_account);
+		$('#ac_history').append(tmp_account);
 			$('#ac_check_button').show();
 		}
 		return false;
@@ -94,6 +95,7 @@ $(document).on('ready', function() {
 			"<br>[fixed_income]:"+obj.fixed_income+"</p><hr />";
 			
 			$('#actrade_check_notice').append(tmp_actrade);
+			$('#actrade_history').append(tmp_actrade);
 			$('#actrade_check_button').show();
 			$('#actrade_mak_noti').empty();
 			
@@ -131,6 +133,7 @@ $(document).on('ready', function() {
 			+"</p><hr />";
 			
 			$('#acbench_check_noti').append(tmp_acbench);
+			$('#acbench_history').append(tmp_acbench);
 			$('#acbench_check_button').show();
 			$('#acbench_mak_noti').empty();
 			
@@ -162,6 +165,7 @@ $(document).on('ready', function() {
 			+"</p><hr />";
 		
 		    $('#bench_check_noti').append(tmp_bench);
+			$('#bench_history').append(tmp_bench);
 			$('#bench_check_button').show();
 			$('#bench_mak_noti').empty();
 		}
