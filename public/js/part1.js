@@ -48,7 +48,7 @@ $(document).on('ready', function() {
 			showHomePanel();
 			$('#user1wrap').append("<p>Create [account]:"+obj.ac_id+" [short name]:"+obj.ac_short_name+"</p>");	
 			
-			tmp_account='<p><span style="color:#FF0;">A new account has been created:</span><br>'+
+			tmp_account='<div id="acnoti_'+obj.ac_id+'"><p><span style="color:#FF0;">A new account has been created:</span><br>'+
 			"[account]:"+obj.ac_id+"<br>[short name]:"+obj.ac_short_name+
 			"<br>[status]:"+obj.ac_status+"<br>[term date]:"+obj.term_date+
 			"<br>[inception date]:"+obj.inception_date+"<br>[region]:"+obj.ac_region+
@@ -61,7 +61,7 @@ $(document).on('ready', function() {
 			"<br>[sub_mandate_id]:"+obj.sub_mandate_id+"<br>[transfer_agent_name]:"+obj.transfer_agent_name+
 			"<br>[trust_bank]:"+obj.trust_bank+"<br>[re_trust_bank]:"+obj.re_trust_bank+
 			"<br>[last_updated_by]:"+obj.last_updated_by+"<br>[last_approved_by]:"+obj.last_approved_by+
-			"<br>[last_update_date]:"+obj.last_update_date+"</p><hr />";
+			"<br>[last_update_date]:"+obj.last_update_date+'</p><button type="button" id="del_ac'+obj.ac_id+'">delete</button><hr /></div>';
 			
 		$('#ac_check_notice').append(tmp_account);
 		$('#ac_history').append(tmp_account);
@@ -88,11 +88,11 @@ $(document).on('ready', function() {
 			showHomePanel();
 			$('#user1wrap').append("<p>account trades:"+obj.ac_id+" [lvts]:"+obj.lvts+"</p>");			
 
-			tmp_actrade='<p><span style="color:#FF0;">An account trade has been created:</span><br>'+
+			tmp_actrade='<div id="actranoti_'+obj.ac_id+'"><p><span style="color:#FF0;">An account trade has been created:</span><br>'+
 			"[account id]:"+obj.ac_id+"<br>[lvts]:"+obj.lvts+
 			"<br>[calypso]:"+obj.calypso+"<br>[aladdin]:"+obj.aladdin+
 			"<br>[trade start date]:"+obj.trade_start_date+"<br>[equity]:"+obj.equity+
-			"<br>[fixed_income]:"+obj.fixed_income+"</p><hr />";
+			'<br>[fixed_income]:'+obj.fixed_income+'</p><button type="button" id="del_actra'+obj.ac_id+'">delete</button><hr /></div>';
 			
 			$('#actrade_check_notice').append(tmp_actrade);
 			$('#actrade_history').append(tmp_actrade);
@@ -124,13 +124,13 @@ $(document).on('ready', function() {
 			showHomePanel();
 			$('#user1wrap').append("<p>account benchmarks:"+obj.ac_id+" [benchmark_id]:"+obj.benchmark_id+"</p>");		
 		
-		    tmp_acbench='<p><span style="color:#FF0;">An account benchmark has been created:</span><br>'+
+		    tmp_acbench='<div id="acbennoti_'+obj.ac_id+'"><p><span style="color:#FF0;">An account benchmark has been created:</span><br>'+
 			"[account id]:"+obj.ac_id+"<br>[benchmark_id]:"+obj.benchmark_id+
 			"<br>[source]:"+obj.source+"<br>[name]:"+obj.name+
 			"<br>[currency]:"+obj.currency+"<br>[primary_flag]:"+obj.primary_flag+
 			"<br>[start_date]:"+obj.start_date+"<br>[end_date]:"+obj.end_date+
 			"<br>[benchmark_reference_id]:"+obj.benchmark_reference_id+"<br>[benchmark_reference_id_source]:"+obj.benchmark_reference_id_source
-			+"</p><hr />";
+			+'</p><button type="button" id="del_acben'+obj.ac_id+'">delete</button><hr /></div>';
 			
 			$('#acbench_check_noti').append(tmp_acbench);
 			$('#acbench_history').append(tmp_acbench);
@@ -158,11 +158,11 @@ $(document).on('ready', function() {
 			showHomePanel();
 			$('#user1wrap').append("<p>benchmarks:"+obj.benchmark_id+" [name]:"+obj.name+"</p>");		
 		
-			  tmp_bench='<p><span style="color:#FF0;">An account trade has been created:</span><br>'+
+			  tmp_bench='<div id="benchnoti_'+obj.benchmark_id+'"><p><span style="color:#FF0;">An account trade has been created:</span><br>'+
 			"[benchmark_id]:"+obj.benchmark_id+"<br>[id_source]:"+obj.id_source+
 			"<br>[name]:"+obj.name+"<br>[currency]:"+obj.currency+
 			"<br>[benchmark_reference_id]:"+obj.benchmark_reference_id+"<br>[benchmark_reference_id_source]:"+obj.benchmark_reference_id_source
-			+"</p><hr />";
+			+'</p><button type="button" id="del_bench'+obj.benchmark_id+'">delete</button><hr /></div>';
 		
 		    $('#bench_check_noti').append(tmp_bench);
 			$('#bench_history').append(tmp_bench);
@@ -387,6 +387,30 @@ $(document).on('ready', function() {
 	ws.send(JSON.stringify({type:"check_decide", checktype:"Benchmarks", checkcont:"decline"}));
 	showHomePanel();
 });
+
+    $(document).click(function(e){  //click the delete button
+		var clickid=$(e.target).attr('id');
+		if (clickid.indexOf("del_bench")>=0){
+			var delid=clickid.substr(9);
+			$("#benchnoti_"+delid).remove();
+			$('#user1wrap').append("<p>Benchmark "+delid+" deleted!</p>");	
+		} else if (clickid.indexOf("del_acben")>=0){
+			var delid=clickid.substr(9);
+			$("#acbennoti_"+delid).remove();
+			$('#user1wrap').append("<p>Ac_benchmark "+delid+" deleted!</p>");	
+		} else if (clickid.indexOf("del_actra")>=0){
+			var delid=clickid.substr(9);
+			$("#actranoti_"+delid).remove();
+			$('#user1wrap').append("<p>Ac_Trade_setup "+delid+" deleted!</p>");	
+		} else if (clickid.indexOf("del_ac")>=0){
+			var delid=clickid.substr(6);
+			$("#acnoti_"+delid).remove();
+			$('#user1wrap').append("<p>Account "+delid+" deleted!</p>");	
+		}
+		
+		
+
+	});
 	
 	//drag and drop marble
 	$('#user1wrap, #trashbin').sortable({connectWith: '.sortable'}).disableSelection();
@@ -407,12 +431,12 @@ $(document).on('ready', function() {
 								name: id,
 								v: 1
 							};
-				ws.send(JSON.stringify(obj));
+				//ws.send(JSON.stringify(obj));
 				$(ui.draggable).fadeOut();
-				setTimeout(function(){
+		
 					$(ui.draggable).remove();
-				}, 300);
-				showHomePanel();
+				
+		//		showHomePanel();
 			}
 		}
 
@@ -565,11 +589,11 @@ function connect_to_server(){
 	function onError(evt){
 		console.log('ERROR ', evt);
 		if(!connected && bag.e == null){											//don't overwrite an error message
-			$('#errorName').html('Warning');
-			$('#errorNoticeText').html('Waiting on the node server to open up so we can talk to the blockchain. ');
-			$('#errorNoticeText').append('This app is likely still starting up. ');
-			$('#errorNoticeText').append('Check the server logs if this message does not go away in 1 minute. ');
-			$('#errorNotificationPanel').fadeIn();
+		//	$('#errorName').html('Warning');
+		//	$('#errorNoticeText').html('Waiting on the node server to open up so we can talk to the blockchain. ');
+		//	$('#errorNoticeText').append('This app is likely still starting up. ');
+		//	$('#errorNoticeText').append('Check the server logs if this message does not go away in 1 minute. ');
+		//	$('#errorNotificationPanel').fadeIn();
 		}
 	}
 }
